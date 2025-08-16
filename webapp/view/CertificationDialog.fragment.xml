@@ -1,0 +1,49 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:u="sap.ui.unified">
+    <Dialog
+        id="certificationDialog"
+        title="Add Certification">
+        <content>
+            <f:SimpleForm
+                editable="true"
+                layout="ResponsiveGridLayout">
+                <f:content>
+                    <Label text="{i18n>certificationNameLabel}" required="true" />
+                    <Input value="{dialog>/name}" />
+
+                    <Label text="{i18n>issuerLabel}" />
+                    <Input value="{dialog>/issuer}" />
+                    
+                    <Label text="{i18n>dateIssuedLabel}" />
+                    <DatePicker
+                        value="{dialog>/date}"
+                        valueFormat="yyyy-MM-dd"
+                        displayFormat="long" />
+
+                    <Label text="{i18n>uploadCertificateLabel}" />
+                    <u:FileUploader
+                        name="certFile"
+                        buttonOnly="false"
+                        icon="sap-icon://upload"
+                        fileType="pdf,png,jpg"
+                        change="onCertificateUpload" />
+
+                </f:content>
+            </f:SimpleForm>
+        </content>
+        <beginButton>
+            <Button
+                text="{i18n>saveButton}"
+                type="Emphasized"
+                press="onSaveCertification" />
+        </beginButton>
+        <endButton>
+            <Button
+                text="{i18n>cancelButton}"
+                press="onCloseCertificationDialog" />
+        </endButton>
+    </Dialog>
+</core:FragmentDefinition>

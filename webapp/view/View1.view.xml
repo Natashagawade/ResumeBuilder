@@ -1,0 +1,222 @@
+<mvc:View
+    controllerName="project1.controller.View1"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:l="sap.ui.layout"
+    xmlns:core="sap.ui.core"
+    xmlns:u="sap.ui.unified">
+    <App>
+        <Page id="resumePage" title="{i18n>appTitle}" class="sapUiResponsiveContentPadding">
+            <content>
+                <IconTabBar
+                    id="iconTabBar"
+                    expanded="{device>/isNoPhone}"
+                    class="sapUiResponsiveContentPadding">
+                    <items>
+                        <IconTabFilter key="editor" text="{i18n>tabEditor}" icon="sap-icon://edit">
+                            <f:SimpleForm
+                                id="resumeForm"
+                                editable="true"
+                                layout="ResponsiveGridLayout"
+                                labelSpanXL="4" labelSpanL="3" labelSpanM="4" labelSpanS="12"
+                                columnsXL="2" columnsL="1" columnsM="1">
+                                <f:content>
+                                    <core:Title text="{i18n>personalDetailsTitle}" />
+                                    <Label text="{i18n>photoLabel}" />
+                                    <VBox>
+                                        <u:FileUploader
+                                            id="photoUploader"
+                                            name="profilePhoto"
+                                            uploadUrl="upload/"
+                                            tooltip="{i18n>photoUploadTooltip}"
+                                            placeholder="{i18n>photoPlaceholder}"
+                                            fileType="png,jpg,jpeg"
+                                            buttonOnly="false"
+                                            icon="sap-icon://camera"
+                                            style="Emphasized"
+                                            change="onPhotoUpload"/>
+                                        <Image
+                                            id="profilePhotoImage"
+                                            src="{resume>/personal/photo}"
+                                            width="100px"
+                                            class="sapUiSmallMarginTop"
+                                            visible="{= !!${resume>/personal/photo} }" />
+                                    </VBox>
+                                    <Label text="{i18n>fullNameLabel}" required="true" />
+                                    <Input value="{resume>/personal/fullName}" />
+                                    <Label text="{i18n>emailLabel}" required="true" />
+                                    <Input type="Email" value="{resume>/personal/email}" />
+                                    <Label text="{i18n>phoneLabel}" />
+                                    <Input type="Tel" value="{resume>/personal/phone}" />
+                                    <Label text="{i18n>addressLabel}" />
+                                    <Input value="{resume>/personal/address}" />
+                                    <Label text="{i18n>summaryLabel}" />
+                                    <TextArea value="{resume>/personal/summary}" rows="4" width="100%" />
+
+                                    <core:Title text="{i18n>workExperienceTitle}" />
+                                    <List id="experienceList" items="{path: 'resume>/experience', templateShareable: true}" noDataText="No data">
+                                        <items>
+                                            <CustomListItem>
+                                                <HBox justifyContent="SpaceBetween" alignItems="Center">
+                                                    <VBox class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom">
+                                                        <Title text="{resume>jobTitle}" />
+                                                        <Text text="{resume>company}" />
+                                                        <Text text="{path: 'resume>startDate', type: 'sap.ui.model.type.Date'} - {path: 'resume>endDate', type: 'sap.ui.model.type.Date'}" />
+                                                    </VBox>
+                                                    <HBox>
+                                                        <Button icon="sap-icon://arrow-top" press="onMoveExperienceUp" class="sapUiTinyMarginEnd" />
+                                                        <Button icon="sap-icon://arrow-bottom" press="onMoveExperienceDown" class="sapUiTinyMarginEnd" />
+                                                        <Button icon="sap-icon://delete" type="Reject" press="onDeleteExperience" />
+                                                    </HBox>
+                                                </HBox>
+                                            </CustomListItem>
+                                        </items>
+                                    </List>
+                                    <Button text="{i18n>addExperienceButton}" press="onAddExperience" icon="sap-icon://add" type="Transparent" />
+
+                                    <core:Title text="{i18n>educationTitle}" />
+                                    <List id="educationList" items="{path: 'resume>/education', templateShareable: true}" noDataText="No data">
+                                        <items>
+                                             <CustomListItem>
+                                                <HBox justifyContent="SpaceBetween" alignItems="Center">
+                                                    <VBox class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom">
+                                                        <Title text="{resume>degree}" />
+                                                        <Text text="{resume>university}" />
+                                                        <Text text="{path: 'resume>startDate', type: 'sap.ui.model.type.Date'} - {path: 'resume>endDate', type: 'sap.ui.model.type.Date'}" />
+                                                    </VBox>
+                                                    <HBox>
+                                                        <Button icon="sap-icon://arrow-top" press="onMoveEducationUp" class="sapUiTinyMarginEnd" />
+                                                        <Button icon="sap-icon://arrow-bottom" press="onMoveEducationDown" class="sapUiTinyMarginEnd" />
+                                                        <Button icon="sap-icon://delete" type="Reject" press="onDeleteEducation" />
+                                                    </HBox>
+                                                </HBox>
+                                            </CustomListItem>
+                                        </items>
+                                    </List>
+                                    <Button text="{i18n>addEducationButton}" press="onAddEducation" icon="sap-icon://add" type="Transparent"/>
+
+                                    <core:Title text="{i18n>projectsTitle}" />
+                                    <List id="projectsList" items="{path: 'resume>/projects', templateShareable: true}" noDataText="No data">
+                                        <items>
+                                             <CustomListItem>
+                                                <HBox justifyContent="SpaceBetween" alignItems="Center">
+                                                    <VBox class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom">
+                                                        <Title text="{resume>title}" />
+                                                        <Text text="{resume>description}" />
+                                                        <Link href="{resume>link}" text="{resume>link}" target="_blank"/>
+                                                    </VBox>
+                                                    <HBox>
+                                                        <Button icon="sap-icon://arrow-top" press="onMoveProjectUp" class="sapUiTinyMarginEnd" />
+                                                        <Button icon="sap-icon://arrow-bottom" press="onMoveProjectDown" class="sapUiTinyMarginEnd" />
+                                                        <Button icon="sap-icon://delete" type="Reject" press="onDeleteProject" />
+                                                    </HBox>
+                                                </HBox>
+                                            </CustomListItem>
+                                        </items>
+                                    </List>
+                                    <Button text="{i18n>addProjectButton}" press="onAddProject" icon="sap-icon://add" type="Transparent"/>
+
+                                    <core:Title text="{i18n>certificationsTitle}" />
+                                    <List id="certificationsList" items="{path: 'resume>/certifications', templateShareable: true}" noDataText="No data">
+                                        <items>
+                                             <CustomListItem>
+                                                <HBox justifyContent="SpaceBetween" alignItems="Center">
+                                                    <VBox class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom">
+                                                        <Title text="{resume>name}" />
+                                                        <Text text="{resume>issuer}" />
+                                                        <Text text="{path: 'resume>date', type: 'sap.ui.model.type.Date'}" />
+                                                    </VBox>
+                                                    <HBox>
+                                                        <core:Icon src="sap-icon://attachment" class="sapUiSmallMarginEnd" visible="{= !!${resume>file}}"/>
+                                                        <Button icon="sap-icon://arrow-top" press="onMoveCertificationUp" class="sapUiTinyMarginEnd" />
+                                                        <Button icon="sap-icon://arrow-bottom" press="onMoveCertificationDown" class="sapUiTinyMarginEnd" />
+                                                        <Button icon="sap-icon://delete" type="Reject" press="onDeleteCertification" />
+                                                    </HBox>
+                                                </HBox>
+                                            </CustomListItem>
+                                        </items>
+                                    </List>
+                                    <Button text="{i18n>addCertificationButton}" press="onAddCertification" icon="sap-icon://add" type="Transparent"/>
+
+                                    <core:Title text="{i18n>skillsTitle}" />
+                                    <Label text="{i18n>skillsLabel}" />
+                                    <TextArea id="skillsTextArea" value="{resume>/skills}" rows="5" width="100%" placeholder="{i18n>skillsPlaceholder}"/>
+                                    
+                                    <core:Title text="{i18n>linksTitle}" />
+                                    <Label text="{i18n>linksLabel}" />
+                                    <TextArea id="linksTextArea" value="{resume>/links}" rows="4" width="100%" placeholder="{i18n>linksPlaceholder}"/>
+
+                                </f:content>
+                            </f:SimpleForm>
+                        </IconTabFilter>
+
+                        <IconTabFilter key="settings" text="{i18n>tabSettings}" icon="sap-icon://settings">
+                            <f:SimpleForm editable="true" layout="ResponsiveGridLayout">
+                                <f:content>
+                                    <core:Title text="{i18n>uiSettingsTitle}" />
+                                    <Label text="{i18n>darkModeLabel}" />
+                                    <Switch state="false" customTextOn="On" customTextOff="Off" change="onThemeSwitch" />
+
+                                    <core:Title text="{i18n>pdfStyleSettingsTitle}" />
+                                    <Label text="{i18n>colorSchemeLabel}" />
+                                    <Select id="colorSchemeSelect" selectedKey="{settings>/colorScheme}">
+                                        <core:Item key="purple" text="{i18n>colorPurple}" />
+                                        <core:Item key="blue" text="{i18n>colorBlue}" />
+                                        <core:Item key="gray" text="{i18n>colorGray}" />
+                                    </Select>
+
+                                    <Label text="{i18n>fontSizeLabel}" />
+                                    <Select id="fontSizeSelect" selectedKey="{settings>/fontSize}">
+                                        <core:Item key="small" text="{i18n>fontSizeSmall}" />
+                                        <core:Item key="medium" text="{i18n>fontSizeMedium}" />
+                                        <core:Item key="large" text="{i18n>fontSizeLarge}" />
+                                    </Select>
+
+                                    <Label text="{i18n>fontStyleLabel}" />
+                                    <Select id="fontStyleSelect" selectedKey="{settings>/fontStyle}">
+                                        <core:Item key="helvetica" text="{i18n>fontStyleSansSerif}" />
+                                        <core:Item key="times" text="{i18n>fontStyleSerif}" />
+                                    </Select>
+
+                                    <core:Title text="{i18n>showSectionsTitle}" />
+                                    <Label text="{i18n>showSummaryLabel}" />
+                                    <Switch state="{settings>/showSummary}" />
+                                    <Label text="{i18n>showExperienceLabel}" />
+                                    <Switch state="{settings>/showExperience}" />
+                                    <Label text="{i18n>showEducationLabel}" />
+                                    <Switch state="{settings>/showEducation}" />
+                                    <Label text="{i18n>showProjectsLabel}" />
+                                    <Switch state="{settings>/showProjects}" />
+                                    <Label text="{i18n>showCertificationsLabel}" />
+                                    <Switch state="{settings>/showCertifications}" />
+                                    <Label text="{i18n>showSkillsLabel}" />
+                                    <Switch state="{settings>/showSkills}" />
+                                    <Label text="{i18n>showLinksLabel}" />
+                                    <Switch state="{settings>/showLinks}" />
+                                </f:content>
+                            </f:SimpleForm>
+                        </IconTabFilter>
+                    </items>
+                </IconTabBar>
+            </content>
+            <footer>
+                <OverflowToolbar>
+                    <Button
+                        id="clearFormButton"
+                        type="Reject"
+                        text="{i18n>clearFormButton}"
+                        icon="sap-icon://clear-all"
+                        press="onClearForm" />
+                    <ToolbarSpacer/>
+                    <Button
+                        id="generatePdfButton"
+                        type="Emphasized"
+                        text="{i18n>generatePdfButton}"
+                        icon="sap-icon://pdf-attachment"
+                        press="onGeneratePdf" />
+                </OverflowToolbar>
+            </footer>
+        </Page>
+    </App>
+</mvc:View>

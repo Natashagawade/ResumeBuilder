@@ -1,0 +1,47 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.ui.layout.form">
+    <Dialog
+        id="educationDialog"
+        title="{i18n>addEducationTitle}">
+        <content>
+            <f:SimpleForm
+                editable="true"
+                layout="ResponsiveGridLayout">
+                <f:content>
+                    <Label text="{i18n>degreeLabel}" required="true" />
+                    <Input id="degreeInput" value="{dialog>/degree}" />
+
+                    <Label text="{i18n>universityLabel}" required="true" />
+                    <Input id="universityInput" value="{dialog>/university}" />
+
+                    <Label text="{i18n>startDateLabel}" />
+                    <DatePicker
+                        id="eduStartDatePicker"
+                        valueFormat="yyyy-MM-dd"
+                        displayFormat="long"
+                        value="{dialog>/startDate}" />
+
+                    <Label text="{i18n>endDateLabel}" />
+                    <DatePicker
+                        id="eduEndDatePicker"
+                        valueFormat="yyyy-MM-dd"
+                        displayFormat="long"
+                        value="{dialog>/endDate}" />
+                </f:content>
+            </f:SimpleForm>
+        </content>
+        <beginButton>
+            <Button
+                text="{i18n>saveButton}"
+                type="Emphasized"
+                press="onSaveEducation" />
+        </beginButton>
+        <endButton>
+            <Button
+                text="{i18n>cancelButton}"
+                press="onCloseEducationDialog" />
+        </endButton>
+    </Dialog>
+</core:FragmentDefinition>
